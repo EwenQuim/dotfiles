@@ -1,0 +1,29 @@
+[user]
+	name = Ewen Quimerc'h
+{{- if eq .chezmoi.hostname "work-laptop" }}
+	email = ewen@work.com
+{{- else }}
+	email = ewen.quimerch@gmail.com
+{{- end }}
+[core]
+	editor = nvim
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	colorMoved = default
+
+[alias]
+	autofixup = "!f() { COMMIT=$(git log --pretty=format:'%h-%s' | fzf --preview='git show --name-status $(echo {} | cut -d - -f 1)' --preview-window wrap | cut -d - -f 1); git commit --fixup $COMMIT; GIT_SEQUENCE_EDITOR=: git rebase --autostash --autosquash -i $COMMIT^; }; f"
+	pushall = !git remote | xargs -L1 -I R git push R
+
+[push]
+	autoSetupRemote = true

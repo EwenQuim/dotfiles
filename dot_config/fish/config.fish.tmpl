@@ -1,0 +1,55 @@
+{{- if eq .chezmoi.os "darwin" }}
+# Initialize Homebrew
+{{- if eq .chezmoi.arch "arm64" }}
+eval (/opt/homebrew/bin/brew shellenv)
+{{- else }}
+eval (/usr/local/bin/brew shellenv)
+{{- end }}
+{{- else if eq .chezmoi.os "linux" }}
+# Initialize Homebrew (Linux)
+if test -d /home/linuxbrew/.linuxbrew
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+{{- end }}
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+    starship init fish | source
+
+    # Up/down arrow searches history by prefix
+    bind \e\[A history-prefix-search-backward
+    bind \e\[B history-prefix-search-forward
+
+    # Option+Delete deletes word
+    bind \e\x7f backward-kill-word
+
+    # Word navigation (Option+Arrow)
+    bind \e\[1\;3D backward-word
+    bind \e\[1\;3C forward-word
+
+    # Line navigation (Cmd+Arrow)
+    bind \e\[H beginning-of-line
+    bind \e\[F end-of-line
+
+    # Option+S prepends sudo
+    bind \es 'fish_commandline_prepend sudo'
+
+    # Initialize zoxide (smarter cd)
+    zoxide init fish | source
+
+    # Initialize fzf (fuzzy finder)
+    fzf --fish | source
+
+    # Abbreviations (expand on space)
+    abbr -a g git
+    abbr -a ga 'git add'
+    abbr -a gc 'git commit'
+    abbr -a gco 'git checkout'
+    abbr -a gp 'git push'
+    abbr -a gl 'git pull'
+    abbr -a gst 'git status'
+    abbr -a gd 'git diff'
+    abbr -a l 'eza -la'
+    abbr -a cat bat
+    abbr -a lg lazygit
+end

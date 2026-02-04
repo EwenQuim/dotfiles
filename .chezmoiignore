@@ -1,0 +1,13 @@
+# Files to ignore (not managed by chezmoi)
+README.md
+LICENSE
+
+# Secrets and credentials
+.config/fish/conf.d/secrets.fish
+.config/gcloud/
+.config/gh/
+.config/configstore/
+
+# App state and cache
+.config/iterm2/
+.config/raycast/

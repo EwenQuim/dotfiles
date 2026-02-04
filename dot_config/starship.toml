@@ -1,0 +1,85 @@
+# Faster prompt rendering
+scan_timeout = 10
+command_timeout = 1000
+add_newline = false
+
+format = """
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$vcsh\
+$git_status\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$deno\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$env_var\
+$crystal\
+$custom\
+$cmd_duration\
+$line_break\
+$lua\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+
+[git_branch]
+style="bold red"
+symbol=""
+
+[git_status]
+format="([$all_status $ahead_behind]($style) )"
+style="bold"
+ahead="[$count↑](bold white)"
+behind="[$count↓](bold white)"
+untracked="[($count)U](bold blue)"
+modified="[($count)M](bold yellow)"
+stashed="[($count)S](bold purple)"
+staged="[($count)S](bold cyan)"
+deleted="[($count)D](bold red)"
+renamed="[($count)R](bold green)"
+
+[golang]
+format="using [go ($version)]($style) "
+
+[python]
+disabled=false

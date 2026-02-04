@@ -1,0 +1,28 @@
+#!/bin/bash
+# Set fish as the default shell (only runs once)
+
+set -e
+
+# Check if fish is installed
+if ! command -v fish &> /dev/null; then
+    echo "Fish shell not found. Install packages first."
+    exit 0
+fi
+
+FISH_PATH=$(which fish)
+CURRENT_SHELL=$(dscl . -read ~/ UserShell 2>/dev/null | awk '{print $2}' || echo "$SHELL")
+
+if [ "$CURRENT_SHELL" != "$FISH_PATH" ]; then
+    echo "Setting fish as default shell..."
+
+    # Add fish to /etc/shells if not present
+    if ! grep -q "$FISH_PATH" /etc/shells; then
+        echo "$FISH_PATH" | sudo tee -a /etc/shells
+    fi
+
+    # Change shell
+    chsh -s "$FISH_PATH"
+    echo "Default shell changed to fish. Log out and back in for changes to take effect."
+else
+    echo "Fish is already the default shell."
+fi
