@@ -1,6 +1,3 @@
-# Taps
-tap "homebrew/bundle"
-
 # Core CLI tools
 brew "bat"           # Better cat with syntax highlighting
 brew "btop"          # Better top/htop
