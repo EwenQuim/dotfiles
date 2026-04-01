@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local encoding = client and client.offset_encoding or 'utf-16'
         local locations = vim.islist(result) and result or { result }
         if #locations == 1 then
-          vim.lsp.util.jump_to_location(locations[1], encoding)
+          vim.lsp.util.show_document(locations[1], encoding, { focus = true })
         else
           vim.fn.setqflist({}, ' ', {
             title = 'Definitions',
