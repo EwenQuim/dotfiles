@@ -25,3 +25,9 @@ map("n", "N", "Nzzzv")
 
 -- Don't yank on paste in visual mode
 map("x", "p", '"_dP')
+
+-- fzf.vim
+map("n", "<C-p>", "<cmd>Files<cr>", { desc = "FZF files" })
+map("n", "<leader>sb", "<cmd>Buffers<cr>", { desc = "FZF buffers" })
+map("n", "<leader>sg", "<cmd>Rg<cr>", { desc = "FZF grep" })
+map("n", "<leader>sh", "<cmd>History<cr>", { desc = "FZF history" })

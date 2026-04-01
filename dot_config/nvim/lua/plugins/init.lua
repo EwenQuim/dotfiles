@@ -1,5 +1,15 @@
 return {
   {
+    "junegunn/fzf",
+    build = "./install --bin",
+  },
+  {
+    "junegunn/fzf.vim",
+    dependencies = { "junegunn/fzf" },
+    cmd = { "Files", "Buffers", "Rg", "History", "Lines", "BLines", "Commands" },
+  },
+
+  {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- format on save
     opts = require "configs.conform",
