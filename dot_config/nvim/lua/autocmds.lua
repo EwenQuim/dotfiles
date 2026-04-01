@@ -11,11 +11,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Ctrl+click: go to definition, fallback to implementation if no results
     local function smart_goto()
       local params = vim.lsp.util.make_position_params()
-      vim.lsp.buf_request(bufnr, 'textDocument/definition', params, function(err, result, ctx, config)
+      vim.lsp.buf_request(bufnr, 'textDocument/definition', params, function(err, result, ctx)
         if err or not result or (type(result) == 'table' and vim.tbl_isempty(result)) then
           vim.lsp.buf.implementation()
+          return
+        end
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        local encoding = client and client.offset_encoding or 'utf-16'
+        local locations = vim.islist(result) and result or { result }
+        if #locations == 1 then
+          vim.lsp.util.jump_to_location(locations[1], encoding)
         else
-          vim.lsp.handlers['textDocument/definition'](err, result, ctx, config)
+          vim.fn.setqflist({}, ' ', {
+            title = 'Definitions',
+            items = vim.lsp.util.locations_to_items(locations, encoding),
+          })
+          vim.cmd 'copen'
         end
       end)
     end
