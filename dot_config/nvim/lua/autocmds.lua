@@ -10,7 +10,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Ctrl+click: go to definition, fallback to implementation if no results
     local function smart_goto()
-      local params = vim.lsp.util.make_position_params()
+      local clients = vim.lsp.get_clients({ bufnr = bufnr })
+      local encoding = clients[1] and clients[1].offset_encoding or 'utf-16'
+      local params = vim.lsp.util.make_position_params(0, encoding)
       vim.lsp.buf_request(bufnr, 'textDocument/definition', params, function(err, result, ctx)
         if err or not result or (type(result) == 'table' and vim.tbl_isempty(result)) then
           vim.lsp.buf.implementation()
